@@ -5241,3 +5241,15 @@ dashboard:web [12/Apr/2018:16:44:59 -0700] - INITIALIZING DASHBOARD
 dashboard:web [12/Apr/2018:16:44:59 -0700] - WE ARE READY
 camera:web [12/Apr/2018:16:44:59 -0700] - INITIALIZING camera
 camera:web [12/Apr/2018:16:44:59 -0700] - WE ARE READY
+streamr:node [12/Apr/2018:16:46:25 -0700] - loading...
+electron:default [12/Apr/2018:16:46:25 -0700] - created window...
+streamr:web [12/Apr/2018:16:46:26 -0700] - INITIALIZING
+camera:node [12/Apr/2018:16:46:26 -0700] - got our camera window
+streamr:node [12/Apr/2018:16:46:26 -0700] - START RECORDING
+streamr:web [12/Apr/2018:16:46:26 -0700] - START RECORDING NOW PLZ
+streamr:web [12/Apr/2018:16:46:26 -0700] - START IT
+dashboard:node [12/Apr/2018:16:46:26 -0700] - got our window
+dashboard:web [12/Apr/2018:16:46:26 -0700] - INITIALIZING DASHBOARD
+dashboard:web [12/Apr/2018:16:46:26 -0700] - WE ARE READY
+camera:web [12/Apr/2018:16:46:26 -0700] - INITIALIZING camera
+camera:web [12/Apr/2018:16:46:26 -0700] - WE ARE READY

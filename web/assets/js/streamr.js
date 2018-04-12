@@ -25,8 +25,9 @@ module.exports = function StreamrWeb(){
         //streamr.log(image);
         ipc.send('feed:capture', image);
       });
+      */
     }, 300);
-    */
+  
   };
 
   let bind = function(){
