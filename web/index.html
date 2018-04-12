@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+        #logger-container {
+          width: 600px;
+          height: 300px;
+          bottom: 0;
+          right: 0;
+          position: absolute;
+          font-size: 80%;
+          overflow: hidden;
+        }
+        #logger {
+          width: 100%;
+          height: 100%;
+        }
+        #logger pre, #logger code {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        #logger code {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+        }
+        #logger span {
+          width: 100%;
+          display: block;
+        }
+        webview {
+          width: 100%;
+          height: 100%;
+        }
+        body {
+          overflow: hidden;
+        }
+    </style>
+  </head>
+  <body>
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='col-sm-9' style='height:100vh'>
+            <webview id='stream' src="./camera.html" style="display:inline-flex;" nodeintegration='true'></webview>
+        </div>
+        <div class='col-sm-3' style='height:100vh; overflow:hidden;'>
+          <webview src="./dashboard.html" style="display:inline-flex;" nodeintegration='true'></webview>
+        </div>
+      </div>
+    </div>
+
+    <div id='logger-container'>
+      <div id='logger'>
+        <pre><code></code></pre>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script>
+      let streamr = require('./assets/js/streamr')();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
