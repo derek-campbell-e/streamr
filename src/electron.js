@@ -18,6 +18,7 @@ module.exports = function Electron(Streamr){
 
   electronModule.createWindow = function(){
     // Create the browser window.
+
     electronModule.emit('ready');
     let windowDimension = require(process.cwd() + "/window.json");
     electronModule.mainWindow = new BrowserWindow({width: windowDimension.width, height: windowDimension.height, x: windowDimension.x, y: windowDimension.y});
@@ -42,6 +43,9 @@ module.exports = function Electron(Streamr){
       // when you should delete the corresponding element.
       electronModule.mainWindow = null;
     });
+
+    electronModule.mainWindow.webContents.setFrameRate(30);
+
     Streamr.window = electronModule.mainWindow;
   };
 
@@ -79,7 +83,8 @@ module.exports = function Electron(Streamr){
       electronModule.createWindow();
     }
   };
-
+  
+  app.disableHardwareAcceleration();
   // electron app events;
   app.on('ready', electronModule.createWindow);
   app.on('window-all-closed', electronModule.windowsClosed);

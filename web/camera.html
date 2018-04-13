@@ -13,7 +13,7 @@
       body {
         overflow: hidden;
       }
-        .video-wrapper, .video-overlay {
+        .video-wrapper, .video-overlay, .canvas-overlay {
           position: absolute;
           top: 0;
           left: 0;
@@ -23,6 +23,9 @@
         .video-overlay {
           z-index: 10000;
         }
+        video {
+          object-fit: cover;
+        }
     </style>
   </head>
   <body>
@@ -31,9 +34,16 @@
       <video id='camera' autoplay="true" style='width:100%; height: 100%;'></video>
     </div>
 
+    <div class='canvas-overlay'>
+        <canvas id='canvas'></canvas>
+    </div>
+    
+
     <div class='video-overlay'>
+      
       <div class='container-fluid'>
         <h1>WELCOME TO MY KITCHEN</h1>
+        <button class='btn btn-primary btn-lg'>CLICK MEEEE</button>
       </div>
     </div>
 

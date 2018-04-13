@@ -16,6 +16,17 @@ module.exports = function Streamr(){
   streamr.camera = require('./camera')(streamr);;
   let electron = null;
 
+  streamr.pipeDevelopmentFeed = function(event, dirty, image){
+    let jpegData = image.toJPEG(10);
+    setTimeout(function(){
+      streamr.window.send('feed:development', jpegData);
+    })
+  };
+
+  streamr.pipeProductionFeed = function(event, dirty, image){
+    streamr.window.send('feed:production', image.toJPEG(100));
+  };
+
   streamr.writeToLog = function(string){
     if(!electron.mainWindow){
       return;
@@ -30,11 +41,14 @@ module.exports = function Streamr(){
   };
 
   streamr.captureFeed = function(event, image){
-    streamr.log("GOT AN IMAGE");
-    debug(image, image.isEmpty());
-    let imageBuffer = image.toPNG();
+    //streamr.log("GOT AN IMAGE");
+    //debug(image, image.isEmpty());
     let capturePath = path.join(process.cwd(), 'capture.png');
-    fs.writeFile(capturePath, imageBuffer, streamr.log.bind(streamr, 'writing capture to file....'));
+    //fs.writeFile(capturePath, image, function(){});
+  };
+
+  streamr.testRecord = function(){
+    streamr.log("START THE RECORDING PLS");
   };
 
   let bind = function(){
@@ -44,11 +58,13 @@ module.exports = function Streamr(){
     electron.on('stderr', streamr.writeToLog);
     streamr.dashboard.on('stdout', streamr.writeToLog);
     streamr.dashboard.on('stderr', streamr.writeToLog);
+    streamr.dashboard.on('start:recording', streamr.testRecord);
     streamr.camera.on('stdout', streamr.writeToLog);
     streamr.camera.on('stderr', streamr.writeToLog);
     streamr.camera.on('ready-to-stream', streamr.startRecording);
     ipc.on('feed:capture', streamr.captureFeed);
     ipc.on('streamr:log', function(event, log){streamr.emit('stdout', log);});
+    streamr.emit('ready');
   };
 
   let init = function(){

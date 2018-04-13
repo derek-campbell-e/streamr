@@ -8,7 +8,24 @@ module.exports = function StreamrWeb(){
   streamr.meta.class = 'streamr';
   streamr.meta.mind = 'web';
 
-  let feed = $("#stream").get(0);
+  let aspectRatio = function(inWidth, inHeight, aspect){
+    aspect = aspect || {w: 1920, h: 1080};
+
+    if(inWidth){
+      let a = inWidth * aspect.h;
+      let b = aspect.w;
+      let height = a / b;
+      return height;
+    }
+
+    if(inHeight){
+      let a = aspect.h;
+      let b = aspect.w * inHeight;
+      let width = b / a;
+      return width;
+    }
+    
+  };
   
   streamr.recordingTimer = null;
 
@@ -17,28 +34,59 @@ module.exports = function StreamrWeb(){
   };
 
   streamr.startRecording = function(){
-    streamr.log("START RECORDING NOW PLZ");
-    streamr.log("START IT");
-    streamr.recordingTimer = setInterval(function(){
-      /*
-      feed.capturePage(function(image){
-        //streamr.log(image);
-        ipc.send('feed:capture', image);
-      });
-      */
-    }, 300);
-  
+    streamr.log("we should show a recording button....");
+  };
+
+  streamr.resizePlayers = function(){
+    $(".stream-player").each(function(i,e){
+      let player = $(e);
+      let width = player.parent().width();
+      let height = aspectRatio(width);
+      try {
+        player.style('height', height + 'px');
+      } catch(error) {
+        player.height(height);
+      }
+      
+    });
+  };
+
+  streamr.pipeDevelopmentFeed = function(sender, image){
+    try {
+      let blob = new Blob([image], {type: 'image/jpeg'});
+      let imageURL = window.URL.createObjectURL(blob);
+      let img = document.querySelector("#stream-development");
+      img.src = imageURL;
+    } catch(error){
+      console.log(error);
+    }
+  };
+
+  streamr.pipeProductionFeed = function(sender, image){
+    //return;
+    try {
+      let blob = new Blob([image], {type: 'image/jpeg'});
+      let imageURL = window.URL.createObjectURL(blob);
+      let img = document.querySelector("#stream-production");
+      img.src = imageURL;
+    } catch(error){
+      console.log(error);
+    }
   };
 
   let bind = function(){
     streamr.on('stdout', ipc.send.bind(ipc, 'streamr:log'))
     ipc.on('log:message', streamr.writeLog);
     ipc.on('start-recording', streamr.startRecording);
+    ipc.on('feed:development', streamr.pipeDevelopmentFeed);
+    ipc.on('feed:production', streamr.pipeProductionFeed);
+    $(document).on('resize', streamr.resizePlayers);
   };
 
   let init = function(){
     bind();
     streamr.log("INITIALIZING");
+    streamr.resizePlayers();
     return streamr;
   };
 

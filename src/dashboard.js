@@ -1,4 +1,4 @@
-module.exports = function Dashboard(){
+module.exports = function Dashboard(Streamr){
   const common = require('./Common');
   const debug = require('debug')('dashboard');
 
@@ -15,11 +15,23 @@ module.exports = function Dashboard(){
     event.sender.send('dashboard:ready');
   };
 
+  dashboard.processMessage = function(event, message){
+    switch(message){
+      case 'start:recording':
+        dashboard.emit('start:recording');
+      break;
+      case 'stop:recording':
+        dashboard.emit('stop:recording');
+      break;
+    }
+  };
+
   let bind = function(){
     ipc.on('dashboard:window', dashboard.receivedWindow);
     ipc.on('dashboard:log', function(event, log){
       dashboard.emit('stdout', log);
     });
+    ipc.on('dashboard:message', dashboard.processMessage);
   };
 
   let init = function(){

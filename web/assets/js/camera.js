@@ -1,4 +1,5 @@
-module.exports = function Camera(){
+module.exports = function Camera(cameraOptions){
+  cameraOptions = cameraOptions || {};
   let options = {};
   options.logFolder = './logs';
   global['Options'] = options;
@@ -10,6 +11,8 @@ module.exports = function Camera(){
   camera.log("INITIALIZING camera");
   
   let video = document.querySelector("#camera");
+  let $video = $("#camera");
+  let feedInterval = null;
 
   camera.loadCamera = function(){
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
@@ -22,6 +25,7 @@ module.exports = function Camera(){
 
   camera.loadIntoFeed = function(stream){
     video.src = window.URL.createObjectURL(stream);
+    $video.style('object-fit', 'contain');
   };
 
   camera.webcamError = function(error){
@@ -33,12 +37,15 @@ module.exports = function Camera(){
     ipc.on('camera:ready', function(){
       camera.log("WE ARE READY");
       camera.loadCamera();
+      $(".card").css({position: 'absolute'}).animate({top: '300px'}, 3000, function(){
+        $(".card").animate({left: '1000px'});
+      });
     });
   };
 
   let init = function(){
     bind();
-    ipc.send('camera:window');
+    ipc.send('camera:window', cameraOptions);
     return camera;
   };
 

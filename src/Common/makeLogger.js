@@ -7,13 +7,15 @@ module.exports = function MakeLogger(Module, Options){
 
   const logFormatter = require('./logFormatter');
   const stdFormatter = require('./stdFormatter');
- 
+  const cwd = process.cwd();
+  const defaultLogPath = path.join(cwd, "logs");
+
   let logger = {};
 
   let logpaths = {};
-  logpaths.stdout = path.join(Options.logFolder, 'stdout.txt');
-  logpaths.stderr = path.join(Options.logFolder, 'stderr.txt');
-  logpaths.results = path.join(Options.logFolder, 'results.txt');
+  logpaths.stdout = path.join(Options.logFolder || defaultLogPath, 'stdout.txt');
+  logpaths.stderr = path.join(Options.logFolder || defaultLogPath, 'stderr.txt');
+  logpaths.results = path.join(Options.logFolder || defaultLogPath, 'results.txt');
 
   if(typeof Module.emit === "undefined"){ Module.emit = function(){} };
 
