@@ -6,70 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="./assets/css/streamr.css">
     <title>Hello, world!</title>
-    <style>
-        #logger-container {
-          background-color: rgba(0,0,0,0.3);
-          width: 600px;
-          height: 300px;
-          bottom: 0;
-          right: 0;
-          position: absolute;
-          font-size: 80%;
-          overflow: hidden;
-          color: #fff;
-          padding: 20px;
-        }
-        #logger {
-          width: 100%;
-          height: 100%;
-        }
-        #logger pre, #logger code {
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-        }
-        #logger code {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-        }
-        #logger span {
-          width: 100%;
-          display: block;
-          color: #fff;
-        }
-        webview {
-          width: 100%;
-          height: 100%;
-        }
-        body {
-          overflow: hidden;
-        }
-        .stream-container {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-        }
-        .stream-player {
-          max-width: 100%;
-        }
-    </style>
   </head>
   <body>
     <div class='container-fluid'>
       <div class='row'>
-        <div class='col-sm-4 stream-container' style='height:100vh'>
-            <img id='stream-production' class='stream-player' src="">
+        <div class='col-9'>
+          <div class='col-sm-12 stream-container' style='height:100vh'>
+              <webview class='stream-player' src="./development.html" style="display:inline-flex;" nodeintegration='true'></webview>
+            </div>
+          <div class='col-sm-12 stream-container' style='height:100vh'>
+              <img id='stream-development' class='stream-player' src="">
+          </div>
         </div>
-        <div class='col-sm-4 stream-container' style='height:100vh'>
-            <img id='stream-development' class='stream-player' src="">
+        <div class='col-3'>
+          <div class='col-sm-12' style='height:100vh; overflow:hidden;'>
+              <webview src="./dashboard.html" style="display:inline-flex;" nodeintegration='true'></webview>
+            </div>
         </div>
-        <div class='col-sm-4' style='height:100vh; overflow:hidden;'>
-          <webview src="./dashboard.html" style="display:inline-flex;" nodeintegration='true'></webview>
-        </div>
+        
+        
       </div>
     </div>
 

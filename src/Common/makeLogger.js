@@ -1,6 +1,7 @@
 module.exports = function MakeLogger(Module, Options){
   Options = Options || {};
 
+  const ipcRenderer = require('electron').ipcRenderer;
   const fs = require('fs');
   const path = require('path');
   const common = require('./index');
@@ -80,5 +81,13 @@ module.exports = function MakeLogger(Module, Options){
   Module.logs = logger.lastLogs.bind(logger, 'stdout');
   Module.errors = logger.lastLogs.bind(logger, 'stderr');
   Module.results = logger.lastLogs.bind(logger, 'results');
+
+  Module.emitToIPC = function(){
+    let oldEmit = Module.emit;
+    Module.emit = function(key, ...args){
+      ipcRenderer.send.apply(ipcRenderer, ['renderer:log', key, ...args]);
+      oldEmit.apply(Module.emit, [key, ...args]);
+    };
+  };
   
 };

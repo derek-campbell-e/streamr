@@ -84,7 +84,7 @@ module.exports = function Electron(Streamr){
     }
   };
   
-  app.disableHardwareAcceleration();
+  //app.disableHardwareAcceleration();
   // electron app events;
   app.on('ready', electronModule.createWindow);
   app.on('window-all-closed', electronModule.windowsClosed);

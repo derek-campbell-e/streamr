@@ -1,0 +1,60 @@
+.container-fluid[width] == ::window[width];
+.container-fluid[height] == ::window[height];
+
+.half[width] == .container-fluid[width] / 2;
+.half[height] == .container-fluid[height];
+
+.anchor-right[right] == ::window[right];
+.anchor-left[left] == ::window[left];
+
+.third[width] == .container-fluid[width] / 3;
+.third[height] == .container-fluid[height];
+
+
+.top-half[width] == .container-fluid[width];
+.top-half[height] == .container-fluid[height] / 2;
+
+.top-quarter[width] == .container-fluid[width];
+.top-quarter[height] == .container-fluid[height] / 4;
+.top-quarter[top] == ::window[top];
+
+.bottom-half[width] == .container-fluid[width];
+.bottom-half[height] == .container-fluid[height] / 2;
+.bottom-half[bottom] == ::window[bottom];
+
+.bottom-quarter[width] == .container-fluid[width];
+.bottom-quarter[height] == .container-fluid[height] / 4;
+.bottom-quarter[bottom] == ::window[bottom];
+
+.left-quarter[height] == .container-fluid[height];
+.left-quarter[width] == .container-fluid[width] / 4;
+.left-quarter[left] == ::window[left];
+
+.right-quarter[height] == .container-fluid[height];
+.right-quarter[width] == .container-fluid[width] / 4;
+.right-quarter[right] == ::window[right];
+
+
+.half-center[width] == .container-fluid[width];
+.half-center[height] == .container-fluid[height] / 2;
+.half-center[cy] == ::window[cy];
+
+
+.top-right[right] == ::window[right];
+.top-right[height] == .container-fluid[height] / 2;
+.top-right[width] == .container-fluid[width] / 4;
+
+.bottom-right[right] == ::window[right];
+.bottom-right[height] == .container-fluid[height] / 2;
+.bottom-right[width] == .container-fluid[width] / 4;
+.bottom-right[bottom] == ::window[bottom];
+
+.top-left[left] == ::window[left];
+.top-left[height] == .container-fluid[height] / 2;
+.top-left[width] == .container-fluid[width] / 4;
+
+.bottom-left[left] == ::window[left];
+.bottom-left[height] == .container-fluid[height] / 2;
+.bottom-left[width] == .container-fluid[width] / 4;
+.bottom-left[bottom] == ::window[bottom];
+

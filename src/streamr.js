@@ -9,15 +9,19 @@ module.exports = function Streamr(){
   const debug = require('debug')('streamr');
 
   let streamr = common.object();
+
+  streamr.options = {};
+  streamr.options.resolution = {w: 1920, h:1080};
   streamr.meta.class = 'streamr';
   streamr.meta.mind = 'node';
+
 
   streamr.dashboard = require('./dashboard')(streamr);
   streamr.camera = require('./camera')(streamr);;
   let electron = null;
 
   streamr.pipeDevelopmentFeed = function(event, dirty, image){
-    let jpegData = image.toJPEG(10);
+    let jpegData = image.toJPEG(100);
     setTimeout(function(){
       streamr.window.send('feed:development', jpegData);
     })
@@ -51,6 +55,17 @@ module.exports = function Streamr(){
     streamr.log("START THE RECORDING PLS");
   };
 
+  streamr.complicationsReady = function(event){
+    streamr.log("our complications are ready!");
+    streamr.complication = {};
+    streamr.complication.window = event.sender;
+  };
+
+  streamr.addComplication = function(){
+    streamr.complication.window.send('add:module');
+    streamr.log("sending add complication");
+  };
+
   let bind = function(){
     streamr.on('stdout', streamr.writeToLog);
     streamr.on('stderr', streamr.writeToLog);
@@ -59,11 +74,16 @@ module.exports = function Streamr(){
     streamr.dashboard.on('stdout', streamr.writeToLog);
     streamr.dashboard.on('stderr', streamr.writeToLog);
     streamr.dashboard.on('start:recording', streamr.testRecord);
+    streamr.dashboard.on('add:module', streamr.addComplication);
     streamr.camera.on('stdout', streamr.writeToLog);
     streamr.camera.on('stderr', streamr.writeToLog);
     streamr.camera.on('ready-to-stream', streamr.startRecording);
     ipc.on('feed:capture', streamr.captureFeed);
     ipc.on('streamr:log', function(event, log){streamr.emit('stdout', log);});
+    ipc.on('compl:ready', streamr.complicationsReady);
+    ipc.on('renderer:log', function(event, key, message){
+      streamr.writeToLog(message);
+    });
     streamr.emit('ready');
   };
 

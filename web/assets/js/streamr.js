@@ -5,32 +5,30 @@ module.exports = function StreamrWeb(){
   const common = require('../../../src/Common');
   const ipc = require('electron').ipcRenderer;
   let streamr = common.object();
+  streamr.emitToIPC();
   streamr.meta.class = 'streamr';
   streamr.meta.mind = 'web';
 
   let aspectRatio = function(inWidth, inHeight, aspect){
     aspect = aspect || {w: 1920, h: 1080};
-
     if(inWidth){
       let a = inWidth * aspect.h;
       let b = aspect.w;
       let height = a / b;
       return height;
     }
-
     if(inHeight){
       let a = aspect.h;
       let b = aspect.w * inHeight;
       let width = b / a;
       return width;
     }
-    
   };
   
   streamr.recordingTimer = null;
 
   streamr.writeLog = function(event, string){
-    $("#logger pre code").append("<span>" + string + "</span>");
+    $("#logger pre code").prepend("<span>" + string + "</span>");
   };
 
   streamr.startRecording = function(){
@@ -43,11 +41,10 @@ module.exports = function StreamrWeb(){
       let width = player.parent().width();
       let height = aspectRatio(width);
       try {
-        player.style('height', height + 'px');
+        player.css('height', height + 'px');
       } catch(error) {
         player.height(height);
       }
-      
     });
   };
 
@@ -63,7 +60,6 @@ module.exports = function StreamrWeb(){
   };
 
   streamr.pipeProductionFeed = function(sender, image){
-    //return;
     try {
       let blob = new Blob([image], {type: 'image/jpeg'});
       let imageURL = window.URL.createObjectURL(blob);
@@ -75,7 +71,6 @@ module.exports = function StreamrWeb(){
   };
 
   let bind = function(){
-    streamr.on('stdout', ipc.send.bind(ipc, 'streamr:log'))
     ipc.on('log:message', streamr.writeLog);
     ipc.on('start-recording', streamr.startRecording);
     ipc.on('feed:development', streamr.pipeDevelopmentFeed);

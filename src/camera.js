@@ -87,27 +87,30 @@ module.exports = function Camera(Streamr){
 
   camera.receivedWindow = function(event, options){
     if(options.live){
-      event.sender.send('camera:ready');
-      event.sender.send('start:recording');
+      event.sender.send('camera:ready', Streamr.options.resolution);
+      //event.sender.send('start:recording');
     } else {
       camera.log("got our camera window");
       camera.window = event.sender;
-      camera.window.send('camera:ready');
-      camera.emit('ready-to-stream');
-      
+      camera.window.send('camera:ready', Streamr.options.resolution);
+      //camera.emit('ready-to-stream');
     }
   };
 
   let bind = function(){
     ipc.on('camera:window', camera.receivedWindow);
-    Streamr.on('ready', function(){
-      camera.pipeDevelopmentFeed();
-      camera.pipeProductionFeed();
+    ipc.on('reload:window', function(){
+      camera.window.send('reload:window');
     });
   };
 
   let init = function(){
     bind();
+    Streamr.on('ready', function(){
+      //camera.pipeDevelopmentFeed();
+      //camera.pipeProductionFeed();
+     //bind();
+    });
     return camera;
   };
 

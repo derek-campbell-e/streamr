@@ -33,6 +33,10 @@ module.exports = function stdFormatter(){
     if(arg === null){
       type = '%s';
     }
+    if(Array.isArray(arg)){
+      type = '%s'
+      arg = arg.join(" ");
+    }
     types.push(type);
   }
   let formatString = types.join(" ");

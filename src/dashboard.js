@@ -23,6 +23,12 @@ module.exports = function Dashboard(Streamr){
       case 'stop:recording':
         dashboard.emit('stop:recording');
       break;
+      case 'reload:window':
+        dashboard.emit('reload:window');
+      break;
+      case 'add:module':
+        dashboard.emit('add:module');
+      break;
     }
   };
 

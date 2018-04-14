@@ -4,14 +4,17 @@
   "description": "stream stuff plus extra",
   "main": "index.js",
   "scripts": {
-    "test": "DEBUG=*,-node*,-elec*,-snap* nodemon --ignore window.json --exec \"electron .\""
+    "test": "DEBUG=*,-node*,-elec*,-snap* nodemon --ignore window.json --exec \"electron .\"",
+    "scss": "nodemon sass.js -e scss"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "animejs": "^2.2.0",
     "debug": "^3.1.0",
     "electron": "^1.8.4",
     "jquery": "^3.3.1",
-    "moment": "^2.22.0"
+    "moment": "^2.22.0",
+    "node-sass": "^4.8.3"
   }
 }
