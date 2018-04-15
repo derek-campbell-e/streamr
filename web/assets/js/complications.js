@@ -1,4 +1,4 @@
-module.exports = function Complications(){
+module.exports = function Complications(options){
   const ipc = require('electron').ipcRenderer;
   const common = require('../../../src/Common');
 
@@ -9,6 +9,7 @@ module.exports = function Complications(){
   compl.meta.mind = 'web';
   
   compl.activeRegions = {};
+  compl.complications = {};
 
   compl.collisions = {};
   compl.collisions['top-half'] = ['half-center', 'top-quarter', 'left-quarter', 'right-quarter'];
@@ -42,16 +43,15 @@ module.exports = function Complications(){
     return collisions;
   };
 
-  let moduleRegions = ['top-left', 'top-right', 'bottom-right','left-quarter', 'bottom-half', 'half-center', 'top-half'];
-  compl.addModule = function(moduleName, moduleRegion){
-    moduleName = 'test2';
-    moduleRegion = moduleRegions.shift();
+  let moduleRegions = ['top-left', 'top-right', 'right-quarter', 'bottom-right','left-quarter', 'top-quarter', 'bottom-half', 'half-center', 'top-half'];
+  compl.addModule = function(event, moduleName, moduleRegion, moduleHtml){
     compl.log("adding module", moduleName, 'to region', moduleRegion);
-    let html = `<div class='module'>
+    let html =`<div class='module'>
                   <div class='wrapper'>
-                    <h2>HELLO!!!</h2>
+                    ${moduleHtml}
                   </div>
                 </div>`;
+
     let dom = $(html);
     let collisionRegions = compl.checkCollision(moduleRegion);
     compl.log(collisionRegions);
@@ -63,7 +63,16 @@ module.exports = function Complications(){
       });
     }
     compl.activeRegions[moduleRegion] = {name: moduleName, dom: dom};
+    compl.complications[moduleName] = {name: moduleName, dom: dom};
     dom.appendTo('.'+moduleRegion);
+  };
+
+  compl.updateModule = function(event, moduleName, html){
+    let ref = compl.complications[moduleName];
+    if(!ref){
+      return;
+    }
+    ref.dom.find(".wrapper").html(html);
   };
 
   compl.removeRegions = function(regions, callback){
@@ -87,12 +96,13 @@ module.exports = function Complications(){
 
   let bind = function(){
     ipc.on('add:module', compl.addModule);
+    ipc.on('update:module', compl.updateModule);
   };
 
   let init = function(){
     bind();
-    ipc.send('compl:ready');
-    compl.log("complications module ready....");
+    ipc.send('compl:ready', options);
+    compl.log("complications module ready....", options.env);
     return compl;
   };
 

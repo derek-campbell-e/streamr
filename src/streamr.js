@@ -17,7 +17,9 @@ module.exports = function Streamr(){
 
 
   streamr.dashboard = require('./dashboard')(streamr);
-  streamr.camera = require('./camera')(streamr);;
+  streamr.camera = require('./camera')(streamr);
+  streamr.complications = require('./complications')(streamr);
+
   let electron = null;
 
   streamr.pipeDevelopmentFeed = function(event, dirty, image){
@@ -62,8 +64,10 @@ module.exports = function Streamr(){
   };
 
   streamr.addComplication = function(){
-    streamr.complication.window.send('add:module');
-    streamr.log("sending add complication");
+    //streamr.complication.window.send('add:module');
+    //streamr.log("sending add complication");
+    streamr.complications.addComplication('prod', 'time', 'top-right');
+    streamr.complications.addComplication('dev', 'time', 'half-center');
   };
 
   let bind = function(){

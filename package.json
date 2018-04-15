@@ -12,6 +12,7 @@
   "dependencies": {
     "animejs": "^2.2.0",
     "debug": "^3.1.0",
+    "ejs": "^2.5.8",
     "electron": "^1.8.4",
     "jquery": "^3.3.1",
     "moment": "^2.22.0",

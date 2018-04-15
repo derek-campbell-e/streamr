@@ -11,16 +11,45 @@
   </head>
   <body>
     <div class='container-fluid'>
-      <div class='row'>
-        <div class='col-9'>
-          <div class='col-sm-12 stream-container' style='height:100vh'>
+      <div class='row' style='display: flex; flex-direction: column; align-items: center;'>
+
+        <div class='col-12' style='display: flex;
+        flex-direction: column;
+        justify-content: center; height: 100vh;'>
+          <div class='row'>
+            <div class='col-sm-6 stream-container'>
               <webview class='stream-player' src="./development.html" style="display:inline-flex;" nodeintegration='true'></webview>
             </div>
-          <div class='col-sm-12 stream-container' style='height:100vh'>
-              <img id='stream-development' class='stream-player' src="">
+            <div class='col-sm-6 stream-container'>
+              <webview class='stream-player' src="./production.html" style="display:inline-flex;" nodeintegration='true'></webview>
+            </div>
           </div>
+
+          <div class='row'>
+            <div class='col-sm-12 toolbar' style='height:80px;'>
+                <webview src="./dashboard.html" style="display:inline-flex;width:100%;height:auto" nodeintegration='true'></webview>
+            </div>
+          </div>
+          
+          <div class='row'>
+            <div class='col-sm-12'>
+                <div id='logger-container'>
+                  <div id='logger'>
+                    <pre><code></code></pre>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+            <div class='row' style='display:none'>
+                <div class='col-sm-12 stream-container' style='height:100vh'>
+                    <img id='stream-development' class='stream-player' src="">
+                </div>
+            </div>
+            
+         
         </div>
-        <div class='col-3'>
+        <div class='col' style='width: 0%; flex: 0; overflow: hidden;'>
           <div class='col-sm-12' style='height:100vh; overflow:hidden;'>
               <webview src="./dashboard.html" style="display:inline-flex;" nodeintegration='true'></webview>
             </div>
@@ -30,11 +59,7 @@
       </div>
     </div>
 
-    <div id='logger-container'>
-      <div id='logger'>
-        <pre><code></code></pre>
-      </div>
-    </div>
+   
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
